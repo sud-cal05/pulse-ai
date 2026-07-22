@@ -61,14 +61,8 @@ def run_probe() -> None:
             ("FEW-SHOT", build_analysis_messages(text)),
         ]:
             try:
-                # complete() takes system+user; for the multi-turn few-shot
-                # case we call the underlying _call directly since it's a
-                # full message list, not a single system/user pair.
-                raw = client._call(messages)  # noqa: SLF001 (probe script, not production code)
+                raw = client.complete_messages(messages)
                 parsed = json.loads(raw)
-                print(f"  [{mode}] sentiment={parsed.get('sentiment')} "
-                      f"category={parsed.get('primary_category')} "
-                      f"urgency={parsed.get('urgency')}")
             except (LLMCallFailed, json.JSONDecodeError) as exc:
                 print(f"  [{mode}] FAILED: {exc}")
         print()
