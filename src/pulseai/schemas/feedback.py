@@ -65,6 +65,16 @@ class FeedbackRecord(BaseModel):
             "velocity if the Emerging Issue Radar nice-to-have is built."
         ),
     )
+    flags: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Bookkeeping for edge cases hit during validation/cleaning "
+            "(e.g. 'truncated_long_input', 'language_uncertain'). Nothing "
+            "downstream treats these as errors — they exist so you can "
+            "show, in the demo, exactly which edge cases fired on real "
+            "data (DESIGN.md §16 / rubric M5B2)."
+        ),
+    )
 
     @field_validator("source")
     @classmethod

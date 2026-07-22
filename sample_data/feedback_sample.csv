@@ -1,0 +1,16 @@
+feedback_text,customer_id,created_at
+"The checkout page keeps timing out on my phone, tried three times and lost my cart each time.",cust_101,2026-07-14T09:15:00
+"Billing charged me twice for the same invoice this month, please refund the duplicate.",cust_102,2026-07-14T10:02:00
+"I love how fast the new dashboard loads, great job on the redesign!",cust_103,2026-07-14T11:30:00
+"Would be great if you added dark mode to the mobile app.",cust_104,2026-07-14T12:45:00
+"Oh great, another crash right in the middle of my presentation. Love it.",cust_105,2026-07-14T13:10:00
+"The UI is gorgeous but your billing system is an absolute nightmare to navigate.",cust_106,2026-07-14T14:00:00
+"Not bad at all, actually really impressed with the new search feature.",cust_107,2026-07-14T14:22:00
+"",cust_108,2026-07-14T15:00:00
+"😍😍😍",cust_109,2026-07-14T15:10:00
+"Me encanta la aplicacion pero el soporte al cliente tarda demasiado en responder.",cust_110,2026-07-14T15:45:00
+"The checkout page keeps timing out on my phone, tried three times and lost my cart each time.",cust_101,2026-07-14T09:15:00
+"Can't log in after the last update, keeps saying invalid session even with the right password. This is urgent, I run payroll through this tool and it's due tomorrow morning.",cust_111,2026-07-14T16:00:00
+"asdkjhasd kjashdkj asdlkj",cust_112,2026-07-14T16:30:00
+"Documentation for the webhook API is out of date, the example payload doesn't match what you actually send.",cust_113,2026-07-14T17:00:00
+"We discovered that a former employee's account still had admin access two weeks after they left the company. This is a serious security concern.",cust_114,2026-07-14T17:20:00
