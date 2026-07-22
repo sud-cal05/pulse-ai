@@ -1,0 +1,172 @@
+[
+  {
+    "_targets": "clear/unambiguous case — anchors the basic format and an obvious bug_defect + negative + high urgency reading",
+    "input": "The app crashes every single time I try to upload a photo. Completely unusable for my workflow.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": [],
+      "category_confidence": 0.95,
+      "sentiment": "negative",
+      "sentiment_score": -0.8,
+      "sentiment_confidence": 0.93,
+      "urgency": "high",
+      "urgency_score": 0.75,
+      "urgency_signals": ["blocks a core workflow (photo upload)", "consistently reproducible"],
+      "item_themes": ["photo upload crash"],
+      "key_quote": "The app crashes every single time I try to upload a photo."
+    }
+  },
+  {
+    "_targets": "clear/unambiguous case — anchors praise_positive with no actionable ask",
+    "input": "Just wanted to say the new dashboard redesign looks fantastic and loads so much faster. Great work.",
+    "output": {
+      "primary_category": "praise_positive",
+      "secondary_categories": [],
+      "category_confidence": 0.9,
+      "sentiment": "positive",
+      "sentiment_score": 0.85,
+      "sentiment_confidence": 0.92,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["dashboard redesign praise", "improved load speed"],
+      "key_quote": "the new dashboard redesign looks fantastic and loads so much faster"
+    }
+  },
+  {
+    "_targets": "boundary: performance vs bug_defect — slowness/timeouts are performance, not a logic defect",
+    "input": "The reports page takes over a minute to load every time, sometimes it just times out completely.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "negative",
+      "sentiment_score": -0.6,
+      "sentiment_confidence": 0.85,
+      "urgency": "medium",
+      "urgency_score": 0.5,
+      "urgency_signals": ["significantly slows a workflow", "intermittent full timeout"],
+      "item_themes": ["reports page load time", "intermittent timeout"],
+      "key_quote": "takes over a minute to load every time, sometimes it just times out completely"
+    }
+  },
+  {
+    "_targets": "boundary: multi-issue feedback — primary chosen by actionability, secondary captures the rest, without polluting the primary distribution",
+    "input": "The app is really slow on my phone lately, and when I looked in the help docs for a fix it didn't even mention this issue.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": ["documentation"],
+      "category_confidence": 0.8,
+      "sentiment": "negative",
+      "sentiment_score": -0.5,
+      "sentiment_confidence": 0.78,
+      "urgency": "medium",
+      "urgency_score": 0.4,
+      "urgency_signals": ["ongoing slowness affecting daily use"],
+      "item_themes": ["mobile performance", "docs missing troubleshooting info"],
+      "key_quote": "really slow on my phone lately"
+    }
+  },
+  {
+    "_targets": "boundary: feature_request vs bug_defect — a request phrased politely is still a bug if it describes broken behavior",
+    "input": "It would be nice if the app didn't log me out randomly every time I switch tabs, that shouldn't be happening.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": ["authentication_access"],
+      "category_confidence": 0.82,
+      "sentiment": "negative",
+      "sentiment_score": -0.55,
+      "sentiment_confidence": 0.8,
+      "urgency": "medium",
+      "urgency_score": 0.45,
+      "urgency_signals": ["disrupts session continuity across normal usage"],
+      "item_themes": ["random session logout", "tab switching triggers logout"],
+      "key_quote": "logs me out randomly every time I switch tabs"
+    }
+  },
+  {
+    "_targets": "hard case: sarcasm — positive-sounding words expressing real frustration must be read as negative",
+    "input": "Oh wonderful, another outage right in the middle of our biggest sale of the year. Great timing, really.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": [],
+      "category_confidence": 0.85,
+      "sentiment": "negative",
+      "sentiment_score": -0.9,
+      "sentiment_confidence": 0.88,
+      "urgency": "critical",
+      "urgency_score": 0.95,
+      "urgency_signals": ["complete outage", "occurring during a high-stakes business event"],
+      "item_themes": ["outage during peak sales event"],
+      "key_quote": "another outage right in the middle of our biggest sale of the year"
+    }
+  },
+  {
+    "_targets": "hard case: negation — 'wasn't bad' flips the literal negative word into a positive reading",
+    "input": "Support actually wasn't bad this time around, got a quick and genuinely helpful reply within the hour.",
+    "output": {
+      "primary_category": "customer_support",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "positive",
+      "sentiment_score": 0.7,
+      "sentiment_confidence": 0.85,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["fast support response", "helpful support reply"],
+      "key_quote": "quick and genuinely helpful reply within the hour"
+    }
+  },
+  {
+    "_targets": "hard case: mixed sentiment — genuinely two-sided feedback should use mixed, not be forced to one polarity",
+    "input": "I love the new interface, it's so much cleaner, but checkout is completely broken and it cost me a sale today.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": ["ui_ux"],
+      "category_confidence": 0.85,
+      "sentiment": "mixed",
+      "sentiment_score": -0.2,
+      "sentiment_confidence": 0.8,
+      "urgency": "high",
+      "urgency_score": 0.8,
+      "urgency_signals": ["blocks checkout completion", "directly caused a lost sale"],
+      "item_themes": ["checkout broken", "positive reaction to new interface"],
+      "key_quote": "checkout is completely broken and it cost me a sale today"
+    }
+  },
+  {
+    "_targets": "critical urgency: security/privacy exposure — always flagged critical even with a calm tone",
+    "input": "I noticed today that I could briefly see another customer's invoice details when I logged into my account.",
+    "output": {
+      "primary_category": "security_privacy",
+      "secondary_categories": ["billing_pricing"],
+      "category_confidence": 0.92,
+      "sentiment": "negative",
+      "sentiment_score": -0.5,
+      "sentiment_confidence": 0.75,
+      "urgency": "critical",
+      "urgency_score": 1.0,
+      "urgency_signals": ["potential cross-customer data exposure", "involves another customer's billing data"],
+      "item_themes": ["cross-account data exposure", "invoice data visible to wrong customer"],
+      "key_quote": "I could briefly see another customer's invoice details when I logged into my account"
+    }
+  },
+  {
+    "_targets": "non-English input — labels and quotes stay in English for corpus-wide aggregation, even though the source text is Spanish",
+    "input": "El soporte tarda demasiado en responder, ya llevo tres dias esperando una respuesta.",
+    "output": {
+      "primary_category": "customer_support",
+      "secondary_categories": [],
+      "category_confidence": 0.83,
+      "sentiment": "negative",
+      "sentiment_score": -0.6,
+      "sentiment_confidence": 0.8,
+      "urgency": "medium",
+      "urgency_score": 0.45,
+      "urgency_signals": ["three days without a response"],
+      "item_themes": ["slow support response time"],
+      "key_quote": "tarda demasiado en responder, ya llevo tres dias esperando una respuesta"
+    }
+  }
+]
