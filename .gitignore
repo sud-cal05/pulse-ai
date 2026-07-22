@@ -1,0 +1,27 @@
+# Secrets — never commit real credentials
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Local data / caches
+*.db
+*.sqlite3
+.cache/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/

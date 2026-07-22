@@ -1,0 +1,17 @@
+# --- LLM & config ---
+openai>=1.50.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0
+tenacity>=8.2.0          # retry logic (analysis stage, Phase 5)
+
+# --- Data / clustering (used from Phase 7 onward) ---
+numpy>=1.26.0
+scikit-learn>=1.4.0
+
+# --- Dashboard (used from Phase 10 onward) ---
+streamlit>=1.35.0
+plotly>=5.20.0
+pandas>=2.2.0
+
+# --- Testing ---
+pytest>=8.0.0
