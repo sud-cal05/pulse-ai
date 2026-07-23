@@ -1,0 +1,274 @@
+[
+  {
+    "_targets": "clear/unambiguous case — anchors the basic format and an obvious bug_defect + negative + high urgency reading",
+    "input": "The app crashes every single time I try to upload a photo. Completely unusable for my workflow.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": [],
+      "category_confidence": 0.95,
+      "sentiment": "negative",
+      "sentiment_score": -0.8,
+      "sentiment_confidence": 0.93,
+      "urgency": "high",
+      "urgency_score": 0.75,
+      "urgency_signals": ["blocks a core workflow (photo upload)", "consistently reproducible"],
+      "item_themes": ["photo upload crash"],
+      "key_quote": "The app crashes every single time I try to upload a photo."
+    }
+  },
+  {
+    "_targets": "clear/unambiguous case — anchors praise_positive with no actionable ask",
+    "input": "Just wanted to say the new dashboard redesign looks fantastic and loads so much faster. Great work.",
+    "output": {
+      "primary_category": "praise_positive",
+      "secondary_categories": [],
+      "category_confidence": 0.9,
+      "sentiment": "positive",
+      "sentiment_score": 0.85,
+      "sentiment_confidence": 0.92,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["dashboard redesign praise", "improved load speed"],
+      "key_quote": "the new dashboard redesign looks fantastic and loads so much faster"
+    }
+  },
+  {
+    "_targets": "boundary: performance vs bug_defect — slowness/timeouts are performance, not a logic defect",
+    "input": "The reports page takes over a minute to load every time, sometimes it just times out completely.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "negative",
+      "sentiment_score": -0.6,
+      "sentiment_confidence": 0.85,
+      "urgency": "medium",
+      "urgency_score": 0.5,
+      "urgency_signals": ["significantly slows a workflow", "intermittent full timeout"],
+      "item_themes": ["reports page load time", "intermittent timeout"],
+      "key_quote": "takes over a minute to load every time, sometimes it just times out completely"
+    }
+  },
+  {
+    "_targets": "boundary: multi-issue feedback — primary chosen by actionability, secondary captures the rest, without polluting the primary distribution",
+    "input": "The app is really slow on my phone lately, and when I looked in the help docs for a fix it didn't even mention this issue.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": ["documentation"],
+      "category_confidence": 0.8,
+      "sentiment": "negative",
+      "sentiment_score": -0.5,
+      "sentiment_confidence": 0.78,
+      "urgency": "medium",
+      "urgency_score": 0.4,
+      "urgency_signals": ["ongoing slowness affecting daily use"],
+      "item_themes": ["mobile performance", "docs missing troubleshooting info"],
+      "key_quote": "really slow on my phone lately"
+    }
+  },
+  {
+    "_targets": "boundary: feature_request vs bug_defect — a request phrased politely is still a bug if it describes broken behavior",
+    "input": "It would be nice if the app didn't log me out randomly every time I switch tabs, that shouldn't be happening.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": ["authentication_access"],
+      "category_confidence": 0.82,
+      "sentiment": "negative",
+      "sentiment_score": -0.55,
+      "sentiment_confidence": 0.8,
+      "urgency": "medium",
+      "urgency_score": 0.45,
+      "urgency_signals": ["disrupts session continuity across normal usage"],
+      "item_themes": ["random session logout", "tab switching triggers logout"],
+      "key_quote": "logs me out randomly every time I switch tabs"
+    }
+  },
+  {
+    "_targets": "hard case: sarcasm — positive-sounding words expressing real frustration must be read as negative",
+    "input": "Oh wonderful, another outage right in the middle of our biggest sale of the year. Great timing, really.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": [],
+      "category_confidence": 0.85,
+      "sentiment": "negative",
+      "sentiment_score": -0.9,
+      "sentiment_confidence": 0.88,
+      "urgency": "critical",
+      "urgency_score": 0.95,
+      "urgency_signals": ["complete outage", "occurring during a high-stakes business event"],
+      "item_themes": ["outage during peak sales event"],
+      "key_quote": "another outage right in the middle of our biggest sale of the year"
+    }
+  },
+  {
+    "_targets": "hard case: negation — 'wasn't bad' flips the literal negative word into a positive reading",
+    "input": "Support actually wasn't bad this time around, got a quick and genuinely helpful reply within the hour.",
+    "output": {
+      "primary_category": "customer_support",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "positive",
+      "sentiment_score": 0.7,
+      "sentiment_confidence": 0.85,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["fast support response", "helpful support reply"],
+      "key_quote": "quick and genuinely helpful reply within the hour"
+    }
+  },
+  {
+    "_targets": "hard case: mixed sentiment — genuinely two-sided feedback should use mixed, not be forced to one polarity",
+    "input": "I love the new interface, it's so much cleaner, but checkout is completely broken and it cost me a sale today.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": ["ui_ux"],
+      "category_confidence": 0.85,
+      "sentiment": "mixed",
+      "sentiment_score": -0.2,
+      "sentiment_confidence": 0.8,
+      "urgency": "high",
+      "urgency_score": 0.8,
+      "urgency_signals": ["blocks checkout completion", "directly caused a lost sale"],
+      "item_themes": ["checkout broken", "positive reaction to new interface"],
+      "key_quote": "checkout is completely broken and it cost me a sale today"
+    }
+  },
+  {
+    "_targets": "critical urgency: security/privacy exposure — always flagged critical even with a calm tone",
+    "input": "I noticed today that I could briefly see another customer's invoice details when I logged into my account.",
+    "output": {
+      "primary_category": "security_privacy",
+      "secondary_categories": ["billing_pricing"],
+      "category_confidence": 0.92,
+      "sentiment": "negative",
+      "sentiment_score": -0.5,
+      "sentiment_confidence": 0.75,
+      "urgency": "critical",
+      "urgency_score": 1.0,
+      "urgency_signals": ["potential cross-customer data exposure", "involves another customer's billing data"],
+      "item_themes": ["cross-account data exposure", "invoice data visible to wrong customer"],
+      "key_quote": "I could briefly see another customer's invoice details when I logged into my account"
+    }
+  },
+  {
+    "_targets": "non-English input — labels and quotes stay in English for corpus-wide aggregation, even though the source text is Spanish",
+    "input": "El soporte tarda demasiado en responder, ya llevo tres dias esperando una respuesta.",
+    "output": {
+      "primary_category": "customer_support",
+      "secondary_categories": [],
+      "category_confidence": 0.83,
+      "sentiment": "negative",
+      "sentiment_score": -0.6,
+      "sentiment_confidence": 0.8,
+      "urgency": "medium",
+      "urgency_score": 0.45,
+      "urgency_signals": ["three days without a response"],
+      "item_themes": ["slow support response time"],
+      "key_quote": "tarda demasiado en responder, ya llevo tres dias esperando una respuesta"
+    }
+  },
+  {
+    "_targets": "v2 addition: positive sentiment on a billing topic must still categorize as billing_pricing, not praise_positive -- category tracks TOPIC, sentiment tracks TONE. Directly targets the golden-set confusion where 'the new invoicing flow isn't nearly as bad as I feared' was mis-categorized as praise_positive.",
+    "input": "Actually really pleased with how smooth the renewal invoice process was this time, no confusion at all.",
+    "output": {
+      "primary_category": "billing_pricing",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "positive",
+      "sentiment_score": 0.75,
+      "sentiment_confidence": 0.85,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["smooth renewal invoicing experience"],
+      "key_quote": "really pleased with how smooth the renewal invoice process was"
+    }
+  },
+  {
+    "_targets": "v2 addition: a timeout/hang at scale with no error message is still performance (slowness/hanging), not a logic defect, even though the total silence can 'feel' broken. Directly targets the golden-set confusion on 'bulk-importing more than 500 rows just times out with no error'.",
+    "input": "Uploading a batch of over 1000 records just hangs forever with no error message, works fine for smaller batches.",
+    "output": {
+      "primary_category": "performance",
+      "secondary_categories": [],
+      "category_confidence": 0.85,
+      "sentiment": "negative",
+      "sentiment_score": -0.55,
+      "sentiment_confidence": 0.82,
+      "urgency": "medium",
+      "urgency_score": 0.5,
+      "urgency_signals": ["large batch operations fail silently at scale"],
+      "item_themes": ["large batch upload timeout", "no error on failure"],
+      "key_quote": "just hangs forever with no error message"
+    }
+  },
+  {
+    "_targets": "v2 addition: mild, lukewarm neutrality must NOT be read as genuine praise -- praise_positive requires actual enthusiasm or a clear positive endorsement, not merely the absence of complaint. Directly targets the golden-set confusion on 'it's fine I guess, does what it says'.",
+    "input": "It's okay, does the job, nothing special either way.",
+    "output": {
+      "primary_category": "other",
+      "secondary_categories": [],
+      "category_confidence": 0.7,
+      "sentiment": "neutral",
+      "sentiment_score": 0.05,
+      "sentiment_confidence": 0.75,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["lukewarm general feedback"],
+      "key_quote": "It's okay, does the job, nothing special either way."
+    }
+  }, 
+  {
+    "_targets": "v3 addition: generalizes the 'category=topic, not tone' rule beyond billing (v2 only had ONE example of this pattern, for billing_pricing) -- confirmed live across two separate golden-set eval runs that positive-toned-but-topical feedback about customer_support was still defaulting to praise_positive.",
+    "input": "Huge shoutout to Jordan on the support team, walked me through a tricky migration and stayed on the call the whole time.",
+    "output": {
+      "primary_category": "customer_support",
+      "secondary_categories": [],
+      "category_confidence": 0.88,
+      "sentiment": "positive",
+      "sentiment_score": 0.8,
+      "sentiment_confidence": 0.87,
+      "urgency": "low",
+      "urgency_score": 0.05,
+      "urgency_signals": [],
+      "item_themes": ["excellent support experience", "helpful migration assistance"],
+      "key_quote": "walked me through a tricky migration and stayed on the call the whole time"
+    }
+  },
+  {
+    "_targets": "v3 addition: a UI element that USED TO EXIST and disappeared entirely is a functional regression (bug_defect), not a discoverability/layout complaint (ui_ux). Directly targets a confusion that reproduced identically (same confidence score) across two separate golden-set eval runs on 'the export button disappeared'.",
+    "input": "The share button that used to be in the top toolbar is just gone now, I can't find it anywhere.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": [],
+      "category_confidence": 0.83,
+      "sentiment": "negative",
+      "sentiment_score": -0.5,
+      "sentiment_confidence": 0.8,
+      "urgency": "medium",
+      "urgency_score": 0.45,
+      "urgency_signals": ["previously-working feature is now missing entirely"],
+      "item_themes": ["share button disappeared", "feature regression"],
+      "key_quote": "the top toolbar is just gone now, I can't find it anywhere"
+    }
+  },
+  {
+    "_targets": "v3 addition: urgency calibration -- when a workaround exists and the core task is still achievable, urgency stays medium, not high. Directly targets a systematic upward urgency bias observed consistently across three separate golden-set evaluation runs.",
+    "input": "The bulk export feature is broken right now, but I can still export files one at a time as a workaround while it's fixed.",
+    "output": {
+      "primary_category": "bug_defect",
+      "secondary_categories": [],
+      "category_confidence": 0.85,
+      "sentiment": "negative",
+      "sentiment_score": -0.4,
+      "sentiment_confidence": 0.82,
+      "urgency": "medium",
+      "urgency_score": 0.4,
+      "urgency_signals": ["has a usable workaround", "does not block the underlying task"],
+      "item_themes": ["bulk export broken", "workaround available"],
+      "key_quote": "I can still export files one at a time as a workaround while it's fixed"
+    }
+  }
+]
