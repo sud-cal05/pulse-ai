@@ -11,7 +11,7 @@ from pathlib import Path
 
 PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
-SYSTEM_PROMPT_VERSION = "analysis_v3"
+SYSTEM_PROMPT_VERSION = "analysis_v4"
 
 
 def load_system_prompt(version: str = SYSTEM_PROMPT_VERSION) -> str:
