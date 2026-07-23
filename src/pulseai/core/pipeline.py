@@ -12,13 +12,22 @@ readable in isolation (DESIGN.md §12 — one responsibility per file).
 from __future__ import annotations
 
 import logging
+import sqlite3
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 
+from pulseai.ai.embeddings import EmbeddingClient
+from pulseai.ai.llm_client import LLMClient
+from pulseai.core.aggregate import build_weekly_aggregate, get_iso_week_bounds
 from pulseai.core.clean import clean_text, detect_language, is_emoji_only
 from pulseai.core.ingest import load_feedback_csv
+from pulseai.core.summarize import generate_weekly_summary
+from pulseai.core.themes import build_theme_clusters
 from pulseai.core.validate import MAX_CHARS, deduplicate_batch, validate_row
 from pulseai.schemas.feedback import FeedbackRecord
+from pulseai.schemas.report import DashboardPayload
+from pulseai.storage.cache import analyze_batch_cached
 
 logger = logging.getLogger("pulseai.pipeline")
 
@@ -100,3 +109,43 @@ def build_feedback_batch(csv_path: str | Path) -> tuple[list[FeedbackRecord], In
         stats.duplicates_dropped, stats.truncated,
     )
     return records, stats
+
+def run_full_pipeline(
+    csv_path: str | Path,
+    llm_client: LLMClient,
+    embed_client: EmbeddingClient,
+    conn: sqlite3.Connection,
+    top_n_themes: int = 5,
+) -> DashboardPayload:
+    """
+    The full Stage 1-9 pipeline, assembled into one DashboardPayload.
+    This is deliberately the ONLY function the dashboard (or any future
+    delivery layer) needs to call: caching, retry/fallback, deterministic
+    aggregation, grounded summarization are already encapsulated in the
+    stage functions this just calls in order. The UI stays a genuinely
+    thin client, never touching ingestion, the LLM, or the database
+    directly.
+    """
+    records, ingestion_stats = build_feedback_batch(csv_path)
+    logger.info("Ingestion: %s", ingestion_stats)
+
+    results, cache_stats = analyze_batch_cached(records, llm_client, conn)
+    logger.info("Analysis: %s", cache_stats)
+
+    if records:
+        reference_date = records[0].created_at.date()
+    else:
+        reference_date = datetime.now().date()
+    period_start, period_end, period_str = get_iso_week_bounds(reference_date)
+
+    themes = build_theme_clusters(results, embed_client, llm_client, period=period_str)
+    aggregate = build_weekly_aggregate(results, themes, period_start, period_end, top_n_themes)
+    summary = generate_weekly_summary(aggregate, llm_client)
+
+    return DashboardPayload(
+        aggregate=aggregate,
+        summary=summary,
+        items=results,
+        themes=themes,
+        generated_at=datetime.now(),
+    )
