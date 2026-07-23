@@ -11,7 +11,7 @@ from pathlib import Path
 
 PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
-SYSTEM_PROMPT_VERSION = "analysis_v1"
+SYSTEM_PROMPT_VERSION = "analysis_v2"
 
 
 def load_system_prompt(version: str = SYSTEM_PROMPT_VERSION) -> str:
@@ -65,7 +65,6 @@ def build_theme_labeling_messages(
         {"role": "system", "content": system},
         {"role": "user", "content": user_content},
     ]
-
 
 SUMMARY_PROMPT_VERSION = "summary_v1"
 
