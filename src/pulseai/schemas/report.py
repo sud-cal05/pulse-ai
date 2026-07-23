@@ -46,6 +46,24 @@ class RecommendedAction(BaseModel):
     linked_theme_id: str | None = None
     priority: int = Field(..., ge=1, description="1 = highest priority.")
 
+class SummaryLLMOutput(BaseModel):
+    """
+    The subset of ExecutiveSummary the MODEL produces. generated_at,
+    model_version, and prompt_version are attached by code afterward -
+    same pattern as LLMAnalysisOutput and ThemeLabelOutput.
+
+    This is also the object that gets GROUNDING-VALIDATED before it's
+    allowed to become a real ExecutiveSummary: summarize.py checks every
+    supporting_feedback_ids entry against the feedback_ids actually shown
+    to the model, and drops (never invents a fix for) any insight that
+    cites something it wasn't given.
+    """
+
+    headline: str
+    key_insights: list[KeyInsight]
+    recommended_actions: list[RecommendedAction]
+    watch_items: list[str] = Field(default_factory=list)
+    caveats: str
 
 class ExecutiveSummary(BaseModel):
     headline: str

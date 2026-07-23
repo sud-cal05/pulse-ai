@@ -5,6 +5,7 @@ from pulseai.core.pipeline import build_feedback_batch
 from pulseai.core.themes import build_theme_clusters
 from pulseai.storage.cache import analyze_batch_cached
 from pulseai.storage.db import get_connection
+from pulseai.core.summarize import generate_weekly_summary
 
 records, ingest_stats = build_feedback_batch("sample_data/feedback_sample.csv")
 print(ingest_stats)
@@ -33,3 +34,22 @@ for sent, count in aggregate.sentiment_distribution.items():
 print("\nTop themes:")
 for t in aggregate.top_themes:
     print(f"  [{t.priority_score:.2f}] {t.label} (size={t.size})")
+
+summary = generate_weekly_summary(aggregate, llm_client)
+
+print(f"\n=== Executive Summary ===")
+print(f"Headline: {summary.headline}\n")
+print("Key Insights:")
+for insight in summary.key_insights:
+    print(f"  - {insight.statement}")
+    print(f"    (cited: {insight.supporting_feedback_ids}, confidence={insight.confidence:.2f})")
+print("\nRecommended Actions:")
+for action in summary.recommended_actions:
+    print(f"  [{action.priority}] {action.action}")
+    print(f"      Rationale: {action.rationale}")
+    print(f"      Expected impact: {action.expected_impact}")
+if summary.watch_items:
+    print("\nWatch items:")
+    for item in summary.watch_items:
+        print(f"  - {item}")
+print(f"\nCaveats: {summary.caveats}")
