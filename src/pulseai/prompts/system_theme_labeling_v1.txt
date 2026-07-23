@@ -1,0 +1,15 @@
+You are labeling a cluster of customer feedback items that have already been grouped together by semantic similarity (embeddings clustering), not by you. Your only job is to give this cluster ONE specific label and a one-sentence description, based strictly on the item themes and quotes provided below.
+
+## Rules
+
+- The label MUST be SPECIFIC — e.g. "checkout timeout on mobile", "duplicate billing charges", "webhook docs out of date". Never a generic label like "customer issues", "problems", "bugs", or "negative feedback". A specific label is one a Product Manager could act on without asking a follow-up question.
+- Base the label and description ONLY on the actual content given below. Do not invent details, causes, or context that aren't present in the input.
+- If the items in the cluster don't obviously share one specific issue, describe the narrowest common thread you can actually support from the text — do not force an artificially specific-sounding label that isn't backed by the input.
+
+## Output contract
+
+Respond with ONLY a single JSON object, no preamble, no markdown fences:{
+"label": "<specific label, a few words>",
+"description": "<one plain-English sentence>"
+}
+

@@ -1,13 +1,7 @@
 """
-Assembles the versioned system prompt + few-shot examples (DESIGN.md §9,
-§10) into a chat message list. Kept separate from llm_client.py (which
-knows nothing about prompt content) and from analyze.py (Phase 5, which
-will call this and then hand the result to the LLM client).
-
-Why few-shot examples are sent as alternating user/assistant turns rather
-than pasted into the system prompt as text: this is the standard pattern
-for chat-completion APIs, and it lets the model see the exact input->JSON
-mapping in the same format it'll be asked to produce for the real input.
+Assembles the versioned system prompt + few-shot examples into a chat
+message list. Kept separate from llm_client.py (which knows nothing
+about prompt content).
 """
 
 from __future__ import annotations
@@ -26,22 +20,11 @@ def load_system_prompt(version: str = SYSTEM_PROMPT_VERSION) -> str:
 
 
 def load_fewshot_examples(version: str = SYSTEM_PROMPT_VERSION) -> list[dict]:
-    """
-    Loads the few-shot JSON. Each example carries a "_targets" key purely
-    for human documentation (which failure mode it defends against,
-    DESIGN.md §10/§18) — that key is NEVER sent to the model; it's
-    stripped out in build_analysis_messages below.
-    """
     path = PROMPTS_DIR / f"fewshot_{version}.json"
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def build_analysis_messages(feedback_text: str, version: str = SYSTEM_PROMPT_VERSION) -> list[dict]:
-    """
-    Returns the full message list for one analysis call: system prompt,
-    then each few-shot example as a user/assistant turn pair, then the
-    real feedback as the final user turn.
-    """
     messages: list[dict] = [
         {"role": "system", "content": load_system_prompt(version)}
     ]
@@ -56,3 +39,29 @@ def build_analysis_messages(feedback_text: str, version: str = SYSTEM_PROMPT_VER
 
     messages.append({"role": "user", "content": f"Feedback: {feedback_text}"})
     return messages
+
+
+THEME_LABEL_PROMPT_VERSION = "theme_labeling_v1"
+
+
+def build_theme_labeling_messages(
+    cluster_themes: list[list[str]], cluster_quotes: list[str]
+) -> list[dict]:
+    """
+    Builds the message list for labeling ONE theme cluster. No few-shot
+    examples here — labeling from real member data is a more constrained
+    task where the main risk is genericness, handled by the system
+    prompt's explicit rules instead.
+    """
+    system = load_system_prompt(version=THEME_LABEL_PROMPT_VERSION)
+    lines = []
+    for i, (themes, quote) in enumerate(zip(cluster_themes, cluster_quotes), start=1):
+        theme_str = ", ".join(themes) if themes else "(no specific themes tagged)"
+        lines.append(f"Item {i} themes: {theme_str}")
+        lines.append(f'Item {i} quote: "{quote}"')
+
+    user_content = "\n".join(lines)
+    return [
+        {"role": "system", "content": system},
+        {"role": "user", "content": user_content},
+    ]

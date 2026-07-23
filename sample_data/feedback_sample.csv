@@ -14,3 +14,7 @@ feedback_text,customer_id,created_at
 "asdkjhasd kjashdkj asdlkj",cust_112,2026-07-14T16:30:00
 "Documentation for the webhook API is out of date, the example payload doesn't match what you actually send.",cust_113,2026-07-14T17:00:00
 "We discovered that a former employee's account still had admin access two weeks after they left the company. This is a serious security concern.",cust_114,2026-07-14T17:20:00
+"My cart just vanishes every time I try to pay from my phone, so annoying.",cust_115,2026-07-14T17:40:00
+"Trying to buy something on my iPhone and the payment screen just spins and spins until it gives up.",cust_116,2026-07-14T18:00:00
+"I got billed two times for my subscription this month, can someone reverse that extra charge?",cust_117,2026-07-14T18:15:00
+"The support team here takes forever to write back, I've been waiting days for a real answer.",cust_118,2026-07-14T18:30:00

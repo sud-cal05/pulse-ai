@@ -1,11 +1,6 @@
 """
 Corpus-level schemas: ThemeCluster (from embeddings clustering, Phase 7)
 and WeeklyAggregate (from deterministic code aggregation, Phase 8).
-
-Why WeeklyAggregate is deliberately NOT LLM-generated (DESIGN.md §6 stage 7,
-§11): counts and distributions must be exact and identical on re-run. An
-LLM asked to "count how many items are negative" is unreliable and
-non-deterministic. This object is built entirely with Python/SQL grouping.
 """
 
 from __future__ import annotations
@@ -22,18 +17,34 @@ class RepresentativeQuote(BaseModel):
     text: str
 
 
+class ThemeLabelOutput(BaseModel):
+    """
+    The subset of ThemeCluster the LLM is responsible for producing when
+    labeling a cluster. Everything else (size, avg_sentiment_score,
+    cohesion, priority_score, member IDs) is computed deterministically
+    in code from the cluster's actual members.
+    """
+
+    label: str = Field(
+        ...,
+        description="MUST be specific ('checkout timeout on mobile'), "
+        "never generic ('customer issues') - rubric M5S4.",
+    )
+    description: str = Field(..., description="One sentence, plain English.")
+
+
 class ThemeCluster(BaseModel):
     theme_id: str
     label: str = Field(
         ...,
         description=(
             "MUST be specific ('checkout timeout on mobile'), never generic "
-            "('customer issues') — this is graded directly (rubric M5S4)."
+            "('customer issues') - this is graded directly (rubric M5S4)."
         ),
     )
     description: str = Field(..., description="One sentence, plain English.")
     member_feedback_ids: list[str] = Field(default_factory=list)
-    size: int = Field(..., ge=0, description="Volume — feeds priority_score.")
+    size: int = Field(..., ge=0, description="Volume - feeds priority_score.")
     avg_sentiment_score: float = Field(..., ge=-1.0, le=1.0)
     avg_urgency_score: float = Field(..., ge=0.0, le=1.0)
     representative_quotes: list[RepresentativeQuote] = Field(
@@ -42,16 +53,16 @@ class ThemeCluster(BaseModel):
     )
     cohesion: float = Field(
         ..., ge=0.0, le=1.0,
-        description="Average intra-cluster similarity — a theme confidence "
+        description="Average intra-cluster similarity - a theme confidence "
         "signal; low cohesion suggests the cluster is a grab-bag, not a "
-        "real theme (DESIGN.md §17).",
+        "real theme (DESIGN.md section 17).",
     )
     priority_score: float = Field(
         ..., ge=0.0, le=1.0,
         description=(
             "volume_share x avg_urgency_weight x negativity_weight, "
             "normalised. Transparent and explainable, deliberately not a "
-            "black-box score (DESIGN.md §3)."
+            "black-box score (DESIGN.md section 3)."
         ),
     )
     period: str = Field(..., description="Week bucket, e.g. '2026-W29'.")
@@ -70,5 +81,5 @@ class WeeklyAggregate(BaseModel):
     review_queue_count: int = Field(
         ..., ge=0,
         description="How many items the confidence gate flagged for human "
-        "review — the honest, visible answer to 'how much can I trust this?'",
+        "review - the honest, visible answer to 'how much can I trust this?'",
     )
